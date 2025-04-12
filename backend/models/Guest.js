@@ -1,10 +1,16 @@
+import User from './User.js';
+import UserRepository from '../repositories/UserRepository.js';
+import PlaceRepository from '../repositories/PlaceRepository.js';
+
 class Guest {
     viewPopularPlace() {
-        return "Viewing popular places";
+        return PlaceRepository.getInstance().getPopularPlaces();
     }
 
     signUp(name, email, password) {
-        console.log(`name: ${name}, email: ${email}, password: ${password}`);
+        const user = new User(name, email, password);
+        UserRepository.getInstance().add(user);
+        return user;
     }
 }
 

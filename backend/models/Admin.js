@@ -1,3 +1,8 @@
+import User from './User.js';
+import Place from './Place.js';
+import UserRepository from '../repositories/UserRepository.js';
+import PlaceRepository from '../repositories/PlaceRepository.js';
+
 class Admin {
     constructor(name, email) {
         this.name = name;
@@ -5,19 +10,29 @@ class Admin {
     }
 
     addUser(name, id) {
-        console.log(`name: ${name}, id: ${id}`);
+        const user = UserRepository.getInstance().findById(id);
+        if (!user) {
+            const newUser = new User(name, "default@email.com", "default");
+            UserRepository.getInstance().add(newUser);
+            return newUser;
+        }
+        return user;
     }
 
     removeUser(id, name) {
-        console.log(`id: ${id}, name: ${name}`);
+        return UserRepository.getInstance().remove(id);
     }
 
     viewDashboard() {
-        console.log('Viewing dashboard...');
+        const users = UserRepository.getInstance().getAll();
+        const places = PlaceRepository.getInstance().getAll();
+        return { users, places };
     }
 
     addNewPlace(name, description) {
-        console.log(`name: ${name}, description: ${description}`);
+        const place = new Place(name, description);
+        PlaceRepository.getInstance().add(place);
+        return place;
     }
 }
 
