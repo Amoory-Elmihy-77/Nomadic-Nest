@@ -31,8 +31,8 @@ router.post('/places', (req, res) => {
 });
 
 router.post('/users', (req, res) => {
-    const { name, id } = req.body;
-    const user = req.admin.addUser(name, id);
+    const { name, email, password, id } = req.body;
+    const user = req.admin.addUser(name, email, password, id);
     res.json({ success: true, user });
 });
 

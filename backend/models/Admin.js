@@ -9,10 +9,10 @@ class Admin {
         this.email = email;
     }
 
-    addUser(name, id) {
+    addUser(name, email, password, id) {
         const user = UserRepository.getInstance().findById(id);
         if (!user) {
-            const newUser = new User(name, "default@email.com", "default");
+            const newUser = new User(name, email, password);
             UserRepository.getInstance().add(newUser);
             return newUser;
         }
