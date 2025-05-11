@@ -3,6 +3,7 @@ import guestRoutes from './guestRoutes.js';
 import userRoutes from './userRoutes.js';
 import recommendationRoutes from './recommendationRoutes.js';
 import adminRoutes from './adminRoutes.js';
+import placeRoutes from './placeRoutes.js';
 
 const router = express.Router();
 
@@ -10,13 +11,11 @@ router.get('/', (req, res) => {
     res.send('Travel Recommendation System API');
 });
 
-// Mount login at root level for easier access
-router.post('/login', userRoutes);
-
-// Mount other route modules
-router.use('/', guestRoutes);
-router.use('/user', userRoutes);
+// Mount routes with proper prefixes
+router.use('/users', userRoutes);  // All user routes will be under /users
+router.use('/guest', guestRoutes); // All guest routes will be under /guest
 router.use('/recommendations', recommendationRoutes);
 router.use('/admin', adminRoutes);
+router.use('/places', placeRoutes);
 
 export default router;

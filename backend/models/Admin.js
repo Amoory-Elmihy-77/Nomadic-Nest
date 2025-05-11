@@ -9,30 +9,60 @@ class Admin {
         this.email = email;
     }
 
-    addUser(name, email, password, id) {
-        const user = UserRepository.getInstance().findById(id);
-        if (!user) {
-            const newUser = new User(name, email, password);
-            UserRepository.getInstance().add(newUser);
-            return newUser;
+    addUser(name, id) {
+        try {
+            const user = UserRepository.getInstance().findById(id);
+            if (!user) {
+                const newUser = new User({
+                    username: name,
+                    email: `${name.toLowerCase().replace(/\s+/g, '.')}@example.com`,
+                    password: 'defaultpassword'
+                });
+                UserRepository.getInstance().add(newUser);
+                return newUser;
+            }
+            return user;
+        } catch (error) {
+            console.error('Error in addUser:', error);
+            throw error;
         }
-        return user;
     }
 
-    removeUser(id, name) {
-        return UserRepository.getInstance().remove(id);
+    removeUser(id) {
+        try {
+            return UserRepository.getInstance().remove(id);
+        } catch (error) {
+            console.error('Error in removeUser:', error);
+            throw error;
+        }
     }
 
     viewDashboard() {
-        const users = UserRepository.getInstance().getAll();
-        const places = PlaceRepository.getInstance().getAll();
-        return { users, places };
+        try {
+            const users = UserRepository.getInstance().getAll();
+            const places = PlaceRepository.getInstance().getAll();
+            return { users, places };
+        } catch (error) {
+            console.error('Error in viewDashboard:', error);
+            throw error;
+        }
     }
 
     addNewPlace(name, description) {
-        const place = new Place(name, description);
-        PlaceRepository.getInstance().add(place);
-        return place;
+        try {
+            const place = new Place({
+                name: name,
+                description: description,
+                location: 'Default Location',
+                price: 0,
+                images: []
+            });
+            PlaceRepository.getInstance().add(place);
+            return place;
+        } catch (error) {
+            console.error('Error in addNewPlace:', error);
+            throw error;
+        }
     }
 }
 

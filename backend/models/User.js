@@ -1,39 +1,48 @@
-class User {
-  constructor(name, email, password) {
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.userID = User.nextID++;
-    this.favorites = [];
-  }
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
-  login(name, password) {
-    return this.name === name && this.password === password;
-  }
-
-  editInformation(name, email) {
-    this.name = name || this.name;
-    this.email = email || this.email;
-    return this;
-  }
-
-  addFavorite(place) {
-    if (!this.favorites.includes(place)) {
-      this.favorites.push(place);
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-    return this.favorites;
-  }
+});
 
-  writeComment(place, comment) {
-    place.addReview(comment);
-    return place;
-  }
+// Hash password before saving
+userSchema.pre('save', async function(next) {
+    if (!this.isModified('password')) return next();
+    
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
 
-  useRecommendationSystem(price) {
-    return RecommendationSystem.getInstance().generatePlaces(price);
-  }
-}
+// Method to compare password
+userSchema.methods.comparePassword = async function(candidatePassword) {
+    return bcrypt.compare(candidatePassword, this.password);
+};
 
-User.nextID = 1;
+const User = mongoose.model('User', userSchema);
 
 export default User;

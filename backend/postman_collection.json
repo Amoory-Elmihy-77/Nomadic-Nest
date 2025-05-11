@@ -1,0 +1,256 @@
+{
+  "info": {
+    "name": "Travel API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Guest Routes",
+      "item": [
+        {
+          "name": "View Popular Places",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/guest/popular"
+          }
+        },
+        {
+          "name": "Sign Up",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/guest/signup",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Routes",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/users/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"test@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get User Profile",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/users/1"
+          }
+        },
+        {
+          "name": "Edit User",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/users/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated Name\",\n    \"email\": \"updated@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/users/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Place Routes",
+      "item": [
+        {
+          "name": "Get All Places",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/places"
+          }
+        },
+        {
+          "name": "Get Popular Places",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/places/popular"
+          }
+        },
+        {
+          "name": "Get Place Details",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/places/1"
+          }
+        },
+        {
+          "name": "Create Place",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/places",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"New Place\",\n    \"description\": \"A beautiful destination\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Place",
+          "request": {
+            "method": "PUT",
+            "url": "http://localhost:3000/places/1",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated Place\",\n    \"description\": \"Updated description\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add Review",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/places/1/reviews",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"rating\": 5,\n    \"comment\": \"Great place!\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Place",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/places/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Recommendation Routes",
+      "item": [
+        {
+          "name": "Get Recommendations",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/recommendations"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Routes",
+      "item": [
+        {
+          "name": "Create Admin (Setup)",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/admin/setup",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\"\n}"
+            }
+          }
+        },
+        {
+          "name": "View Dashboard",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:3000/admin/dashboard"
+          }
+        },
+        {
+          "name": "Add New Place",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/admin/places",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"New Admin Place\",\n    \"description\": \"Added by admin\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Add New User",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:3000/admin/users",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"New User\",\n    \"id\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Remove User",
+          "request": {
+            "method": "DELETE",
+            "url": "http://localhost:3000/admin/users/1"
+          }
+        }
+      ]
+    }
+  ]
+}

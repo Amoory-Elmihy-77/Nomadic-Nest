@@ -1,75 +1,52 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-
-import UserRepository from './repositories/UserRepository.js';
-import PlaceRepository from './repositories/PlaceRepository.js';
-import UserFactory from './patterns/Factory.js';
-import PlaceBuilder from './patterns/Builder.js';
+import express from "express";
+import bodyParser from "body-parser";
+import morgan from "morgan";
+import connectDB from './config/database.js';
 import routes from './routes/index.js';
 
-dotenv.config();
-
-
-const userRepository = UserRepository.getInstance();
-const placeRepository = PlaceRepository.getInstance();
-
-// Chain of responsibility
-userRepository.setNext(placeRepository);
-
-// Set up some initial data
-export const initializeData = () => {
-    // Add Fake places
-    const placeBuilder = new PlaceBuilder();
-
-    const place1 = placeBuilder
-        .setName("Eiffel Tower")
-        .setDescription("Famous landmark in Paris")
-        .addReview("Beautiful view!")
-        .build();
-    
-    const place2 = placeBuilder
-        .setName("Grand Canyon")
-        .setDescription("Natural wonder in Arizona")
-        .addReview("Breathtaking!")
-        .addReview("Amazing natural beauty")
-        .build();
-    
-    const place3 = placeBuilder
-        .setName("Tokyo Tower")
-        .setDescription("Famous tower in Tokyo")
-        .addReview("Great night view")
-        .build();
-    
-    placeRepository.add(place1);
-    placeRepository.add(place2);
-    placeRepository.add(place3);
-
-    // Create an admin user
-    const admin = UserFactory.createUser('admin', 'Brouno', 'brouno@example.com');
-    userRepository.add(admin);
-
-    // Create a regular user
-    let user = UserFactory.createUser('user', 'Youssef', 'youssef@example.com', 'password123');
-    userRepository.add(user);
-    user = UserFactory.createUser('user', 'Arafa', 'arafa@example.com', 'password123');
-    userRepository.add(user);
-    user = UserFactory.createUser('user', 'Ola', 'ola@example.com', 'password123');
-    userRepository.add(user);
-    user = UserFactory.createUser('user', 'Mariam', 'mariam@example.com', 'password123');
-    userRepository.add(user);
-    user = UserFactory.createUser('user', 'Ammar', 'ammar@example.com', 'password123');
-    userRepository.add(user);
-
-    // Add some favorites
-    user.addFavorite(place1);
-    user.addFavorite(place3);
-};
-
+// Initialize Express app
 const app = express();
-app.use(bodyParser.json());
 
+// Middleware
+app.use(bodyParser.json());
+app.use(morgan('dev'));
+
+// Connect to MongoDB
+connectDB();
+
+// Use routes
 app.use('/', routes);
 
-
-export default app;
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log('Available routes:');
+    console.log('\nGuest Routes:');
+    console.log('- GET /guest/popular - View popular places');
+    console.log('- POST /guest/signup - Sign up as a new user');
+    
+    console.log('\nUser Routes:');
+    console.log('- POST /users/login - Login as a user');
+    console.log('- GET /users/:id - Get user profile');
+    console.log('- PUT /users/:id - Edit user information');
+    console.log('- DELETE /users/:id - Delete user account');
+    
+    console.log('\nPlace Routes:');
+    console.log('- GET /places - Get all places');
+    console.log('- GET /places/popular - Get popular places');
+    console.log('- GET /places/:id - Get place details');
+    console.log('- POST /places - Create new place');
+    console.log('- PUT /places/:id - Update place');
+    console.log('- POST /places/:id/reviews - Add review to place');
+    console.log('- DELETE /places/:id - Delete place');
+    
+    console.log('\nRecommendation Routes:');
+    console.log('- GET /recommendations - Get travel recommendations');
+    
+    console.log('\nAdmin Routes:');
+    console.log('- GET /admin/dashboard - View admin dashboard');
+    console.log('- POST /admin/places - Add a new place');
+    console.log('- POST /admin/users - Add a new user');
+    console.log('- DELETE /admin/users/:id - Remove a user');
+});
