@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import morgan from "morgan";
 import connectDB from './config/database.js';
 import routes from './routes/index.js';
+import cors from "cors";
 
 // Initialize Express app
 const app = express();
@@ -10,6 +11,7 @@ const app = express();
 // Middleware
 app.use(bodyParser.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 // Connect to MongoDB
 connectDB();
