@@ -4,7 +4,9 @@ import morgan from "morgan";
 import connectDB from './config/database.js';
 import routes from './routes/index.js';
 import cors from "cors";
+import env from "dotenv";
 
+env.config();
 // Initialize Express app
 const app = express();
 
