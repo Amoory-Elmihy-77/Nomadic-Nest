@@ -10,9 +10,7 @@ class PlaceRepository extends Repository {
     }
 
     getPlacesByPriceRange(price) {
-        // Simulating a price attribute for places
         return this.items.filter(place => {
-            // Assume each place has a random price for demo purposes
             const placePrice = Math.floor(Math.random() * 500);
             return placePrice <= price;
         });

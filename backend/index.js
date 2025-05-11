@@ -2,26 +2,21 @@ import express from "express";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import connectDB from './config/database.js';
-import routes from './routes/index.js';
+import routes from './routes/allRoutes.js';
 import cors from "cors";
 import env from "dotenv";
 
 env.config();
-// Initialize Express app
 const app = express();
 
-// Middleware
 app.use(bodyParser.json());
 app.use(morgan('dev'));
 app.use(cors());
 
-// Connect to MongoDB
 connectDB();
 
-// Use routes
 app.use('/', routes);
 
-// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

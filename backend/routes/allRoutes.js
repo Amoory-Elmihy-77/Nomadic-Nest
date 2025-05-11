@@ -11,9 +11,8 @@ router.get('/', (req, res) => {
     res.send('Travel Recommendation System API');
 });
 
-// Mount routes with proper prefixes
-router.use('/users', userRoutes);  // All user routes will be under /users
-router.use('/guest', guestRoutes); // All guest routes will be under /guest
+router.use('/users', userRoutes);  
+router.use('/guest', guestRoutes); 
 router.use('/recommendations', recommendationRoutes);
 router.use('/admin', adminRoutes);
 router.use('/places', placeRoutes);

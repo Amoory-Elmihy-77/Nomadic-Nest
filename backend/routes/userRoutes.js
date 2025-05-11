@@ -8,18 +8,15 @@ const router = express.Router();
 const userRepository = UserRepository.getInstance();
 const placeRepository = PlaceRepository.getInstance();
 
-// Register a new user
 router.post('/signup', async (req, res) => {
     try {
         const { username, email, password } = req.body;
         
-        // Check if user already exists
         const existingUser = await User.findOne({ $or: [{ email }, { username }] });
         if (existingUser) {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Create new user
         const user = new User({
             username,
             email,
@@ -33,18 +30,14 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// Login user
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         
-        // Find user
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-
-        // Check password
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
             return res.status(401).json({ message: 'Invalid credentials' });
@@ -56,7 +49,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Get user profile
 router.get('/:id', async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select('-password');
@@ -69,7 +61,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Update user profile
+
 router.put('/:id', async (req, res) => {
     try {
         const { username, email } = req.body;
@@ -89,7 +81,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Delete user
+
 router.delete('/:id', async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
@@ -102,7 +94,6 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
-// Other routes remain the same
 router.put('/:id', (req, res) => {
     const { id } = req.params;
     const { name, email } = req.body;

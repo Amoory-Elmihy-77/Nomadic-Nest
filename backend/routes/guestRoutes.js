@@ -4,7 +4,6 @@ import Guest from '../models/Guest.js';
 const router = express.Router();
 const guest = new Guest();
 
-// View popular places (no authentication required)
 router.get('/popular', async (req, res) => {
     try {
         const places = await guest.viewPopularPlaces();
@@ -14,7 +13,6 @@ router.get('/popular', async (req, res) => {
     }
 });
 
-// Sign up as a new user
 router.post('/signup', async (req, res) => {
     try {
         const { username, email, password } = req.body;

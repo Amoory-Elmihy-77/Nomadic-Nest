@@ -15,13 +15,11 @@ class Guest {
 
     async signUp(username, email, password) {
         try {
-            // Check if user already exists
             const existingUser = await User.findOne({ $or: [{ email }, { username }] });
             if (existingUser) {
                 throw new Error('User already exists');
             }
 
-            // Create new user
             const user = new User({
                 username,
                 email,

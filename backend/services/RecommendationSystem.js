@@ -14,10 +14,8 @@ class RecommendationSystem extends Singleton {
     }
 
     generatePlaces() {
-        // Use the adapter to convert from legacy system
         const recommendations = this.adapter.generatePlaces(this.price || 300);
     
-        // Add to our place repository
         recommendations.forEach(place => {
             PlaceRepository.getInstance().add(place);
         });

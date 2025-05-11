@@ -3,7 +3,6 @@ import Place from '../models/Place.js';
 
 const router = express.Router();
 
-// Get all places
 router.get('/', async (req, res) => {
     try {
         const places = await Place.find().populate('reviews.user', 'username');
@@ -13,7 +12,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Get popular places (sorted by average rating)
 router.get('/popular', async (req, res) => {
     try {
         const places = await Place.find()
@@ -26,7 +24,6 @@ router.get('/popular', async (req, res) => {
     }
 });
 
-// Get place by ID
 router.get('/:id', async (req, res) => {
     try {
         const place = await Place.findById(req.params.id).populate('reviews.user', 'username');
@@ -39,7 +36,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Create new place
 router.post('/', async (req, res) => {
     try {
         const { name, description, location, price, images } = req.body;
@@ -57,7 +53,6 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Update place
 router.put('/:id', async (req, res) => {
     try {
         const { name, description, location, price, images } = req.body;
@@ -80,7 +75,6 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Add review to place
 router.post('/:id/reviews', async (req, res) => {
     try {
         const { userId, comment, rating } = req.body;
@@ -103,7 +97,6 @@ router.post('/:id/reviews', async (req, res) => {
     }
 });
 
-// Delete place
 router.delete('/:id', async (req, res) => {
     try {
         const place = await Place.findByIdAndDelete(req.params.id);

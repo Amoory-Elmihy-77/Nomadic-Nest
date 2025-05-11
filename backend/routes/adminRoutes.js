@@ -6,7 +6,6 @@ import PlaceRepository from '../repositories/PlaceRepository.js';
 const router = express.Router();
 const userRepository = UserRepository.getInstance();
 
-// Admin middleware to check for admin access
 const checkAdminAccess = (req, res, next) => {
   const admin = userRepository.getAll().find(u => u instanceof Admin);
   if (admin) {
@@ -17,7 +16,6 @@ const checkAdminAccess = (req, res, next) => {
   }
 };
 
-// Route to create initial admin - should be called first
 router.post('/setup', (req, res) => {
     const { name, email } = req.body;
     const users = userRepository.getAll();
@@ -42,7 +40,6 @@ router.get('/dashboard', (req, res) => {
     res.json(dashboard);
 });
 
-// Add a new place
 router.post('/places', (req, res) => {
     try {
         const { name, description } = req.body;
@@ -64,7 +61,6 @@ router.post('/places', (req, res) => {
     }
 });
 
-// Add a new user
 router.post('/users', (req, res) => {
     try {
         const { name, id } = req.body;
@@ -85,7 +81,6 @@ router.post('/users', (req, res) => {
         });
     }
 });
-// Delete user by ID
 router.delete('/users/:id', (req, res) => {
     try {
         const { id } = req.params;

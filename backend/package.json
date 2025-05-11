@@ -2,9 +2,9 @@
   "name": "tarvel",
   "version": "1.0.0",
   "type": "module",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "node app.js",
+    "dev": "node index.js",
     "test": ""
   },
   "keywords": [],
